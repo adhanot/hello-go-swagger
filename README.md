@@ -40,3 +40,9 @@ After modify the swagger.yaml or add new database schema, you just need go in th
 ```bash
 sh generate.sh
 ```
+
+You can access on the documentation here :
+
+```bash
+http://0.0.0.0:8081/v1/docs
+
