@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  core:
+    build: .
+    volumes:
+      - ./:/app:z
+      - hello_assets:/assets/hello:z
+      - /dev/snd
+    ports:
+      - 8081:8080
+    env_file:
+      - ./.env
+    networks:
+      - hello_core
+  database:
+    image: postgres:12
+    # volumes:
+    #         - hello_database:/var/lib/postgresql/data:Z
+    environment:
+      POSTGRES_DATABASE: hello
+      POSTGRES_USER: hello
+      POSTGRES_PASSWORD: hello
+    networks:
+      - hello_core
+
+volumes:
+  hello_database:
+  hello_assets:
+
+networks:
+  hello_core:

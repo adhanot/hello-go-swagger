@@ -1,0 +1,162 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: hello
+schemes: [http]
+host: 0.0.0.0:8081
+basePath: /v1
+consumes: [application/json]
+produces: [application/json]
+securityDefinitions:  
+   Bearer:    
+     type: apiKey    
+     name: Authorization    
+     in: header
+# PATHS
+paths:
+  /hello:
+    get:
+      tags:
+      - home
+      security:
+        - Bearer: []
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/WelcomingMessage"
+          description: Hello
+  # REGISTER
+  /register:
+    post:
+      description: 'To register a new user'
+      summary: 'Register a new user'
+      tags: [User]
+      operationId: Register
+      consumes:
+        - 'application/json'
+      parameters:
+        - name: 'signup'
+          in: 'body'
+          required: true
+          description: 'Registeration Payload'
+          schema:
+            $ref: '#/definitions/RegisterUser'
+      responses:
+        200:
+          description: Successful registeration
+          schema:
+            $ref: '#/definitions/Success'
+        400:
+          description: Error Registration
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          schema:
+            $ref: '#/definitions/ServerError'
+          description: Server error
+
+  # LOGIN
+  /login:
+    post:
+      summary: 'Log the user'
+      description: 'To log-in'
+      tags: [User]
+      operationId: Login
+      consumes:
+        - 'application/json'
+      parameters:
+        - name: 'login'
+          in: 'body'
+          required: true
+          description: 'Login Payload'
+          schema:
+            $ref: '#/definitions/LoginUser'
+      responses:
+        200:
+          description: Successful log
+          schema:
+            $ref: '#/definitions/LoginSuccess'
+        400:
+          description: Error Registration
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          schema:
+            type: string
+          description: Server error
+  
+# DEFINITIONS
+
+definitions:
+  WelcomingMessage:
+    type: object
+    properties: 
+      message:
+        type: string
+        example: Hello, welcome on the go-swagger framework
+  
+  Success:
+    type: object
+    properties:
+      success:
+        type: object
+      message:
+        type: string
+
+  Error:
+    type: object
+    properties:
+      success:
+        type: boolean
+        example: false
+      message:
+        type: string
+        example: Error
+
+  ServerError:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Server Error
+
+  # REGISTER
+  RegisterUser:
+    type: object
+    required: [email,fname,password, pseudo]
+    properties:
+      email:
+        type: string
+        example: "test@gmail.fr"
+      pseudo:
+        type: string
+        example: "salty"
+      fname:
+        type: string
+        example: "adrien"
+      lname:
+        type: string
+        example: "hanot"
+      password:
+        type: string
+        example: "test"
+
+  # LOGIN
+  LoginUser:
+    type: object
+    required: [pseudo,password]
+    properties:
+      pseudo:
+        type: string
+        example: "adhanot"
+      password:
+        type: string
+        example: "test"
+  LoginSuccess:
+    type: object
+    properties:
+      success:
+        type: boolean
+      token:
+        type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJkYXRlX2NyZWF0ZWRfYXQiOiIyMDIxLTA0LTE4VDE5OjQ5OjE4LjE0MzU5MzkxWiIsImRhdGVfZXhwaXJlZF9hdCI6IjIwMjEtMDQtMThUMjE6NDk6MTguMTQzNTk0NDk2WiIsImVtYWlsIjoic2FsdHlANDIuZnIiLCJleHAiOjE2MTg3ODI1NTgsImZuYW1lIjoiYWRyaWVuIiwibG5hbWUiOiJoYW5vdCIsImxvZ2luIjoic2FsdHkifQ.WS5hy8jE-Hdd3NFQcENK4XKAoQBoSVRR-WNaexPtNs4
