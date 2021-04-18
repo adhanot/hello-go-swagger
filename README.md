@@ -1,6 +1,6 @@
 # hello-go-swagger
 
-Hello-go-swagger is a Golang Template to build fast RESTful API by code generation. The complete stack creates a powerful and secure framework.
+Hello-go-swagger is a Golang Template to build fast RESTful API by code generation. The complete stack creates a fast powerful and secure framework.
 
 It use go-swagger (https://goswagger.io/), ENT Framework (https://entgo.io/) and JWT (https://github.com/dgrijalva/jwt-go).
 
